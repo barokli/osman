@@ -197,7 +197,8 @@ public partial class Questions : System.Web.UI.Page
         dbQueries.saveAnswer(Member_id, Question_id, DateTime.Now, sonuc, null); // null alan, soruyu kaç dakkada çözdüyü tutacaktı boş geçtim.
 
         if (sonuc)
-        {
+        { 
+
             DogruSay++;
 
             lblDogru.Text = DogruSay.ToString();
@@ -211,6 +212,7 @@ public partial class Questions : System.Web.UI.Page
         Iterator++;
         if (Iterator == 9)
         {
+            dbQueries.afterFirst_9(Member_id, Topic_id);
 
 
         }
