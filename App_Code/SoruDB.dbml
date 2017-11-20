@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="osman" Class="SoruDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=osman;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="osmanConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.dt_answers" Member="dt_answerOS">
+    <Type Name="dt_answerOS">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="answer" Type="System.String" DbType="Text NOT NULL" CanBeNull="false" UpdateCheck="Never" />
+      <Column Name="question_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="dt_questionOS_dt_answerOS" Member="dt_questionOS" ThisKey="question_id" OtherKey="id" Type="dt_questionOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dt_membership" Member="dt_membershipOS">
+    <Type Name="dt_membershipOS">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="m_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="m_password" Type="System.String" DbType="VarChar(30) NOT NULL" CanBeNull="false" />
+      <Column Name="real_name" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="real_email" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="m_info" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="dt_membershipOS_tx_answeredQuestion" Member="tx_answeredQuestionOS" ThisKey="id" OtherKey="member_id" Type="tx_answeredQuestionOS" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dt_questions" Member="dt_questionOS">
+    <Type Name="dt_questionOS">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="difficulty" Type="System.Byte" DbType="TinyInt NOT NULL" CanBeNull="false" />
+      <Column Name="topic_id" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="question" Type="System.String" DbType="NVarChar(100)" CanBeNull="true" />
+      <Column Name="answer" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="answer_count" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="dt_questionOS_dt_answerOS" Member="dt_answerOS" ThisKey="id" OtherKey="question_id" Type="dt_answerOS" />
+      <Association Name="dt_questionOS_tx_answeredQuestion" Member="tx_answeredQuestionOS" ThisKey="id" OtherKey="question_id" Type="tx_answeredQuestionOS" />
+      <Association Name="lu_topicOS_dt_questionOS" Member="lu_topicOS" ThisKey="topic_id" OtherKey="id" Type="lu_topicOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.lu_lesson" Member="lu_lessonOS">
+    <Type Name="lu_lessonOS">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="lu_lessonOS_lu_topicOS" Member="lu_topicOS" ThisKey="id" OtherKey="lesson_id" Type="lu_topicOS" />
+    </Type>
+  </Table>
+  <Table Name="dbo.lu_topic" Member="lu_topicOS">
+    <Type Name="lu_topicOS">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="text" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="lesson_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="lu_topicOS_dt_questionOS" Member="dt_questionOS" ThisKey="id" OtherKey="topic_id" Type="dt_questionOS" />
+      <Association Name="lu_lessonOS_lu_topicOS" Member="lu_lessonOS" ThisKey="lesson_id" OtherKey="id" Type="lu_lessonOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tx_answeredQuestions" Member="tx_answeredQuestionOS">
+    <Type Name="tx_answeredQuestionOS">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="member_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="question_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="correct" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="time" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
+      <Association Name="dt_membershipOS_tx_answeredQuestion" Member="dt_membershipOS" ThisKey="member_id" OtherKey="id" Type="dt_membershipOS" IsForeignKey="true" />
+      <Association Name="dt_questionOS_tx_answeredQuestion" Member="dt_questionOS" ThisKey="question_id" OtherKey="id" Type="dt_questionOS" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.dt_memberTopic" Member="dt_memberTopicOS">
+    <Type Name="dt_memberTopicOS">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="member_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="topic_id" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="puan" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

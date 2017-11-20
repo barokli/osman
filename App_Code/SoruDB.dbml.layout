@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="SoruDB">
+  <DataContextMoniker Name="/SoruDBDataContext" />
+  <nestedChildShapes>
+    <classShape Id="e8288650-2b78-41b7-bb81-77fea4dc04b7" absoluteBounds="4.25, 1.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/SoruDBDataContext/dt_answerOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="f5acd757-5acc-4fdb-bce3-9f2416a1fe1e" absoluteBounds="4.265, 1.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="952cdc60-ee8f-464c-b15b-f19ba8a60ffe" absoluteBounds="1.5, 1.75, 2, 1.9631982421875">
+      <DataClassMoniker Name="/SoruDBDataContext/dt_membershipOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4f8dac42-1274-4de6-94b7-e05ff05804e7" absoluteBounds="1.5150000000000001, 2.21, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="cd9c9a90-0ac6-451e-bc78-c30d06909d38" absoluteBounds="4.25, 3.625, 2, 1.9631982421875">
+      <DataClassMoniker Name="/SoruDBDataContext/dt_questionOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="1374d349-a4de-4b10-8b06-7047b9605775" absoluteBounds="4.2650000000000006, 4.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(5.25 : 3.625); (5.25 : 2.5112939453125)]" fixedFrom="NotFixed" fixedTo="NotFixed">
+      <AssociationMoniker Name="/SoruDBDataContext/dt_questionOS/dt_questionOS_dt_answerOS" />
+      <nodes>
+        <classShapeMoniker Id="cd9c9a90-0ac6-451e-bc78-c30d06909d38" />
+        <classShapeMoniker Id="e8288650-2b78-41b7-bb81-77fea4dc04b7" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="9a3c1123-65cc-4514-8b1e-383aa99c9d50" absoluteBounds="0.875, 0.5, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/SoruDBDataContext/lu_lessonOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c6a6cf02-40ef-4048-abe0-aca315810514" absoluteBounds="0.89000000000000012, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="bacb3391-b593-4bdb-b77f-ce4574e52a88" absoluteBounds="0.625, 4.125, 2, 1.3862939453125">
+      <DataClassMoniker Name="/SoruDBDataContext/lu_topicOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="a787bdd9-3c1b-4866-ada4-c2a381ecdf58" absoluteBounds="0.64, 4.585, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(2.625 : 4.81814697265625); (4.25 : 4.81814697265625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SoruDBDataContext/lu_topicOS/lu_topicOS_dt_questionOS" />
+      <nodes>
+        <classShapeMoniker Id="bacb3391-b593-4bdb-b77f-ce4574e52a88" />
+        <classShapeMoniker Id="cd9c9a90-0ac6-451e-bc78-c30d06909d38" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.15625 : 1.69399251302083); (1.15625 : 4.125)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SoruDBDataContext/lu_lessonOS/lu_lessonOS_lu_topicOS" />
+      <nodes>
+        <classShapeMoniker Id="9a3c1123-65cc-4514-8b1e-383aa99c9d50" />
+        <classShapeMoniker Id="bacb3391-b593-4bdb-b77f-ce4574e52a88" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="8b6a9917-5a4a-4160-94b6-75bafcca2b8c" absoluteBounds="6.75, 2.625, 2, 1.9631982421875">
+      <DataClassMoniker Name="/SoruDBDataContext/tx_answeredQuestionOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="8796bceb-dacb-496f-b91f-3a29f72ca7bc" absoluteBounds="6.765, 3.085, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(3.5 : 3.09375); (5.16666666666667 : 3.09375 : JumpStart); (5.33333333333333 : 3.09375 : JumpEnd); (6.75 : 3.09375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SoruDBDataContext/dt_membershipOS/dt_membershipOS_tx_answeredQuestion" />
+      <nodes>
+        <classShapeMoniker Id="952cdc60-ee8f-464c-b15b-f19ba8a60ffe" />
+        <classShapeMoniker Id="8b6a9917-5a4a-4160-94b6-75bafcca2b8c" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(6.25 : 4.10659912109375); (6.75 : 4.10659912109375)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SoruDBDataContext/dt_questionOS/dt_questionOS_tx_answeredQuestion" />
+      <nodes>
+        <classShapeMoniker Id="cd9c9a90-0ac6-451e-bc78-c30d06909d38" />
+        <classShapeMoniker Id="8b6a9917-5a4a-4160-94b6-75bafcca2b8c" />
+      </nodes>
+    </associationConnector>
+    <classShape Id="1a0c8c9c-1bb4-44b8-9c60-11327cf6743c" absoluteBounds="6.75, 0.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/SoruDBDataContext/dt_memberTopicOS" />
+      <nestedChildShapes>
+        <elementListCompartment Id="b5f42fa9-0283-455c-a51c-144aa892ae40" absoluteBounds="6.765, 1.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
