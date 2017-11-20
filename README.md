@@ -1,2 +1,5 @@
 # osman
-çalýþ osman çalýþ :)
+calis osman calis :)
+
+
+veritabaninda bisey yaparsan backup alip db klasorune atarsin

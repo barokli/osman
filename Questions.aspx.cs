@@ -212,7 +212,13 @@ public partial class Questions : System.Web.UI.Page
         Iterator++;
         if (Iterator == 9)
         {
-            dbQueries.afterFirst_9(Member_id, Topic_id);
+            SoruDBDataContext x = new SoruDBDataContext();
+            var puan = x.dt_memberTopicOS.Where(p => p.member_id == Member_id && p.topic_id == Topic_id).Select(p => p.puan).FirstOrDefault();
+            if (puan==null)
+            {
+                dbQueries.afterFirst_9(Member_id, Topic_id);
+            }
+                
 
 
         }
