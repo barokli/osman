@@ -78,4 +78,65 @@ select * from
         }
 
     }
+
+    public static void afterFirst_9(int member_id, int topic_id)
+    {
+        using (var connection = new SqlConnection(_s))
+        {
+            connection.Open();
+            using (
+                var command = new SqlCommand(@"
+
+  insert into dt_memberTopic 
+
+select  @member_id,@topic_id,sum(convert(float,a.difficulty) * a.correct)/count(*)  from 
+ (select top 9 taq.correct ,dq.difficulty --teste birkaç kere girip çıkmışsa, son 9 sorusunun cebabına bakıyoruz
+  from 
+ tx_answeredQuestions taq
+  join dt_questions dq on dq.id = taq.question_id
+  where taq.member_id = @member_id and dq.topic_id = @topic_id
+  order by taq.id desc
+  ) a
+  
+
+
+", connection))
+            {
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@topic_id", topic_id);
+                command.Parameters.AddWithValue("@member_id", member_id);
+                command.ExecuteNonQuery();
+
+            }
+        }
+    }
+
+    public static DataTable dif(int member_id, int topic_id, int diff)
+    {
+
+
+        using (var connection = new SqlConnection(_s))
+        {
+            connection.Open();
+            using (
+                var command = new SqlCommand(@"
+select top 6 id from dt_questions where topic_id= @topic_id and difficulty = @diff order by NEWID()
+  
+", connection))
+            {
+                command.CommandType = CommandType.Text;
+                command.Parameters.AddWithValue("@topic_id", topic_id);
+                command.Parameters.AddWithValue("@member_id", member_id);
+                command.Parameters.AddWithValue("@diff", diff);
+                command.ExecuteNonQuery();
+                SqlDataAdapter adp = new SqlDataAdapter(command);
+                DataTable a = new DataTable();
+                adp.Fill(a);
+                return a;
+
+            }
+        }
+
+
+    }
 }
