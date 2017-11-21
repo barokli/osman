@@ -110,6 +110,7 @@ select  @member_id,@topic_id,sum(convert(float,a.difficulty) * a.correct)/count(
             }
         }
     }
+<<<<<<< HEAD
 
     public static DataTable dif(int member_id, int topic_id, int diff)
     {
@@ -139,4 +140,6 @@ select top 6 id from dt_questions where topic_id= @topic_id and difficulty = @di
 
 
     }
+=======
+>>>>>>> master
 }
