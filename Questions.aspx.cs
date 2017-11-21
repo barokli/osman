@@ -103,13 +103,14 @@ public partial class Questions : System.Web.UI.Page
             ViewState["sorular"] = value;
         }
     }
+
+
     protected void Page_Load(object sender, EventArgs e)
     {
         
         if (!Page.IsPostBack)
         {
-
-            Iterator = 0;
+ 
             RadioButtonList1.Items.Add(('A').ToString());
             RadioButtonList1.Items.Add(('B').ToString());
             RadioButtonList1.Items.Add(('C').ToString());
@@ -125,42 +126,48 @@ public partial class Questions : System.Web.UI.Page
                 sorular = dbQueries.first9Questions(Topic_id);
 
                 DogruSay = 0;
-
+                Iterator = 0;
                 Question_id = (int)sorular.Rows[Iterator][0];
                 soruYukle(Question_id);
 
             }
             else
             {
+                
+           
                 double puan1 = Convert.ToDouble(puan);
-                if (puan1 <= 35 && puan1 > 0)
-                {
+
+                
                     //dif = 1 
-                    var complate = (from c in x.tx_answeredQuestionOS
+                    var  complate = (from c in x.tx_answeredQuestionOS
                                     where c.member_id == Member_id
                                     select c.question_id);
-                    //hangi soruları sordum
-                    if (!complate.Contains(Question_id))
+                //hangi soruları sordum
+
+                //abi burda her soruyu tek nasıl sorcam şimdilik olesine bunu yazdım senle bidaha bakak sonra
+                // bıraktığı dif den devam etsin
+                 
+                    if (puan1 <= (0.6666) && puan1 > 0)
                     {
-                        // eğer sormadıgım soru varsa burda ifin içinde çağırcam 
+                    kenanİsik(1);
+
                     }
 
-                    if (puan1 <= 65 && puan1 > 35)
+                    if (puan1 <= 1.33333 && puan1 > 0.6666)
                     {
-                        //dif = 2
+                    kenanİsik(2);
 
                     }
 
-                    if (puan1 <= 100 && puan1 > 65)
+                    if (puan1 <= 2 && puan1 > 1.3333)
                     {
-                        //dif = 3
-
+                    kenanİsik(2);
+           
                     }
-                }
+               
             }
         }
     }
-
 
     protected void soruYukle(int question_id)
     {
@@ -191,13 +198,15 @@ public partial class Questions : System.Web.UI.Page
             }
         }
     }
+
     protected void btnAnswer_Click(object sender, EventArgs e)
     {
         var sonuc = dbQueries.answerCheck(Question_id, RadioButtonList1.SelectedValue);
         dbQueries.saveAnswer(Member_id, Question_id, DateTime.Now, sonuc, null); // null alan, soruyu kaç dakkada çözdüyü tutacaktı boş geçtim.
 
         if (sonuc)
-        {
+        { 
+
             DogruSay++;
 
             lblDogru.Text = DogruSay.ToString();
@@ -207,18 +216,20 @@ public partial class Questions : System.Web.UI.Page
         {
             //Response.Write("<script language=javascript>alert('" + "Üzgünüm Yanlış! Doğru sayınız :  " + DogruSay.ToString() + "');</script>");
         }
-        
+
         Iterator++;
+
         if (Iterator == 9)
         {
-
-
+            dbQueries.afterFirst_9(Member_id, Topic_id);
         }
-        
+
+       
+
         //ilk 9 soru bittiyse
 
-        Question_id = (int)sorular.Rows[Iterator][0];
-        soruYukle(Question_id);
+        //Question_id = (int)sorular.Rows[Iterator][0];
+        //soruYukle(Question_id);
         RadioButtonList1.SelectedIndex = -1;
 
 
@@ -228,5 +239,36 @@ public partial class Questions : System.Web.UI.Page
     {
         Response.Write("<script language=javascript>alert('" + "Üzgünüm Yanlış! Doğru sayınız :  " + DogruSay.ToString() + "');</script>");
         Server.Transfer("Math.aspx");
+    }
+
+    protected void kenanİsik(int diff)
+    {
+        SoruDBDataContext x = new SoruDBDataContext();
+        var complate = (from c in x.tx_answeredQuestionOS
+                        where c.member_id == Member_id
+                        select c.question_id);
+
+
+        DogruSay = 0;
+        Iterator = 0;
+        var sorular = dbQueries.dif(Member_id, Topic_id, diff);
+        Question_id = (int)sorular.Rows[Iterator][0];
+
+        if (!complate.Contains(Question_id))
+        {
+            soruYukle(Question_id);
+
+            if(DogruSay>=4)
+            {
+                kenanİsik(diff + 1);
+            }
+
+            if (DogruSay < 4 && diff != 0)
+            {
+                kenanİsik(diff - 1);
+            }
+
+        }
+   
     }
 }
