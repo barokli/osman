@@ -104,6 +104,18 @@ public partial class Questions : System.Web.UI.Page
         }
     }
 
+    public Boolean flag
+    {
+        get
+        {
+            return flag;
+        }
+
+        set
+        {
+            flag = value;
+        }
+    }
 
     protected void Page_Load(object sender, EventArgs e)
     {
@@ -124,7 +136,7 @@ public partial class Questions : System.Web.UI.Page
             if (puan == null)
             {
                 sorular = dbQueries.first9Questions(Topic_id);
-
+                flag = true;
                 DogruSay = 0;
                 Iterator = 0;
                 Question_id = (int)sorular.Rows[Iterator][0];
@@ -156,14 +168,17 @@ public partial class Questions : System.Web.UI.Page
                     if (puan1 <= 1.33333 && puan1 > 0.6666)
                     {
                     kenanİsik(2);
+                    if(DogruSay<4)
+                    { kenanİsik(1); }
 
                     }
 
                     if (puan1 <= 2 && puan1 > 1.3333)
                     {
-                    kenanİsik(2);
-           
-                    }
+                    kenanİsik(3);
+                    if (DogruSay < 4)
+                    { kenanİsik(2); }
+                }
                
             }
         }
@@ -219,23 +234,14 @@ public partial class Questions : System.Web.UI.Page
 
         Iterator++;
 
-        if (Iterator == 9)
+        if (Iterator == 9 && flag)
         {
-<<<<<<< HEAD
+            flag = false;
             dbQueries.afterFirst_9(Member_id, Topic_id);
         }
-=======
-            SoruDBDataContext x = new SoruDBDataContext();
-            var puan = x.dt_memberTopicOS.Where(p => p.member_id == Member_id && p.topic_id == Topic_id).Select(p => p.puan).FirstOrDefault();
-            if (puan==null)
-            {
-                dbQueries.afterFirst_9(Member_id, Topic_id);
-            }
-                
->>>>>>> master
 
-       
-
+        Question_id = (int)sorular.Rows[Iterator][0];
+        soruYukle(Question_id);
         //ilk 9 soru bittiyse
 
         //Question_id = (int)sorular.Rows[Iterator][0];
@@ -260,22 +266,15 @@ public partial class Questions : System.Web.UI.Page
 
 
         DogruSay = 0;
-        Iterator = 0;
         var sorular = dbQueries.dif(Member_id, Topic_id, diff);
         Question_id = (int)sorular.Rows[Iterator][0];
 
         if (!complate.Contains(Question_id))
         {
-            soruYukle(Question_id);
 
             if(DogruSay>=4)
             {
                 kenanİsik(diff + 1);
-            }
-
-            if (DogruSay < 4 && diff != 0)
-            {
-                kenanİsik(diff - 1);
             }
 
         }
